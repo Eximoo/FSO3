@@ -29,10 +29,20 @@ app.get('/api/persons', (request, response) => {
 });
 
 app.get('/info', (request, response) => {
-  console.log(request);
   response.send(
     `<p>Phonebook has info for ${persons.length} people</p><p>${new Date()}</p>`
   );
+});
+
+app.get('/api/persons/:id', (request, response) => {
+  const id = request.params.id;
+  const target = persons.find((person) => person.id == Number(id));
+  if (target) {
+    response.json(target);
+  } else {
+    response.statusMessage = 'Person was not found';
+    response.status(404).send('Person Not found');
+  }
 });
 
 const PORT = 3001;
