@@ -1,5 +1,12 @@
 const express = require('express');
+const morgan = require('morgan');
 const app = express();
+app.use(express.json());
+
+morgan.token('body', (req, res) => JSON.stringify(req.body));
+app.use(
+  morgan(':method :url :status :res[content-length] - :response-time ms :body')
+);
 
 const persons = [
   {
@@ -52,6 +59,24 @@ app.delete('/api/persons/:id', (request, response) => {
   }
   response.status(204).send();
 });
+app.post('/api/persons', (request, response) => {
+  if (!request.body.name || !request.body.number) {
+    return response.status(400).send({ error: 'All fields are required' });
+  }
+  if (persons.find((person) => person.name === request.body.name)) {
+    return response
+      .status(400)
+      .send({ error: 'Person with that already exists' });
+  }
+  persons.push({ id: Math.floor(Math.random() * 1000000000), ...request.body });
+  response.send(request.body);
+});
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' });
+};
+
+app.use(unknownEndpoint);
 
 const PORT = 3001;
 
