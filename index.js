@@ -44,6 +44,14 @@ app.get('/api/persons/:id', (request, response) => {
     response.status(404).send('Person Not found');
   }
 });
+app.delete('/api/persons/:id', (request, response) => {
+  const id = request.params.id;
+  const index = persons.findIndex((person) => person.id === Number(id));
+  if (index != -1) {
+    persons.splice(index, 1);
+  }
+  response.status(204).send();
+});
 
 const PORT = 3001;
 
