@@ -2,8 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const app = express();
 app.use(express.json());
-app.use(express.static('./dist'));
-console.log('./dist');
+app.use(express.static(__dirname + '/dist'));
 
 morgan.token('body', (req, res) => JSON.stringify(req.body));
 app.use(
@@ -74,11 +73,11 @@ app.post('/api/persons', (request, response) => {
   response.send(request.body);
 });
 
-const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: 'unknown endpoint' });
-};
+// const unknownEndpoint = (request, response) => {
+//   response.status(404).send({ error: 'unknown endpoint' });
+// };
 
-app.use(unknownEndpoint);
+// app.use(unknownEndpoint);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
