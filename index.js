@@ -54,11 +54,12 @@ app.use(unknownEndpoint);
 
 const errorHandler = (error, request, response, next) => {
   if (error.name === 'CastError') {
-    return response.status(400).send({ error: 'malformatted id' });
+    return response.status(400).send({ error: 'malformation in id param' });
   }
   next(error);
 };
 app.use(errorHandler);
+
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
