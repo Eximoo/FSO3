@@ -7,6 +7,9 @@ GET http://localhost:3001/api/persons
 GET http://localhost:3001/api/persons/3
 
 ###
+GET http://localhost:3001/api/unknown/endpoint
+
+###
 GET http://localhost:3001/api/persons/65477cadd27f9c98dd5e899e
 
 ###
@@ -17,6 +20,6 @@ PUT http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "name": "dss",
-    "number": "213123"
+    "name": "Poppinp Lovenadas",
+    "number": "51-00124-320"
 }
