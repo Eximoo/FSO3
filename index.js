@@ -18,9 +18,11 @@ app.get('/api/persons', (request, response) => {
 });
 
 app.get('/info', (request, response) => {
-  response.send(
-    `<p>Phonebook has info for ${persons.length} people</p><p>${new Date()}</p>`
-  );
+  Person.find({}).then((persons) => {
+    response.send(
+      `<p>Phonebook has ${persons.length} entries </p><p>${new Date()}</p>`
+    );
+  });
 });
 
 app.get('/api/persons/:id', (request, response, next) => {
@@ -44,6 +46,17 @@ app.delete('/api/persons/:id', (request, response) => {
 
 app.put('/api/persons', (request, response) => {
   Person.create(request.body).then((result) => response.send(result));
+});
+
+app.put('/api/persons/:id', (request, response) => {
+  if (request.params.id) {
+    Person.findByIdAndUpdate(request.params.id, request.body, {
+      upsert: true,
+      new: true,
+    }).then((result) => response.send(result));
+  } else {
+    response.status(404).send();
+  }
 });
 
 const unknownEndpoint = (request, response) => {
