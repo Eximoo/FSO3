@@ -44,8 +44,10 @@ app.delete('/api/persons/:id', (request, response) => {
   Person.findByIdAndDelete(request.params.id).then(response.status(204).send());
 });
 
-app.put('/api/persons', (request, response) => {
-  Person.create(request.body).then((result) => response.send(result));
+app.put('/api/persons', (request, response, next) => {
+  Person.create(request.body)
+    .then((result) => response.send(result))
+    .catch((error) => next(error));
 });
 
 app.put('/api/persons/:id', (request, response) => {
@@ -68,6 +70,9 @@ app.use(unknownEndpoint);
 const errorHandler = (error, request, response, next) => {
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformation in id param' });
+  } else if (error.name === 'ValidationError') {
+    console.log(`inside validation error: ${error.message}`);
+    return response.status(400).json({ error: error.message });
   }
   next(error);
 };
