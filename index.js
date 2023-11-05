@@ -1,16 +1,16 @@
 const express = require('express');
 const morgan = require('morgan');
 const app = express();
-const cors = require('cors');
 app.use(express.json());
 app.use(express.static(__dirname + '/dist'));
+// const cors = require('cors');
 // app.use(cors());
 
-// morgan.token('body', (req, res) => JSON.stringify(req.body));
-// app.use(
-//   morgan(':method :url :status :res[content-length] - :response-time ms :body')
-// );
-app.use(morgan('common'));
+morgan.token('body', (req, res) => JSON.stringify(req.body));
+app.use(
+  morgan(':method :url :status :res[content-length] - :response-time ms :body')
+);
+
 const persons = [
   {
     id: 1,
