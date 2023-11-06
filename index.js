@@ -50,12 +50,16 @@ app.put('/api/persons', (request, response, next) => {
     .catch((error) => next(error));
 });
 
-app.put('/api/persons/:id', (request, response) => {
+app.put('/api/persons/:id', (request, response, next) => {
   if (request.params.id) {
     Person.findByIdAndUpdate(request.params.id, request.body, {
+      runValidators: true,
+      context: 'query',
       upsert: true,
       new: true,
-    }).then((result) => response.send(result));
+    })
+      .then((result) => response.send(result))
+      .catch((error) => next(error));
   } else {
     response.status(404).send();
   }
