@@ -22,9 +22,12 @@ const personSchema = new mongoose.Schema({
     minLength: 9,
     required: true,
     validate: {
-      validator: function (v) { //
-        return /\d{2,3}-\d+/.test(v);
+      validator: function (v) {
+        //
+        return /^\d{2,3}-\d+$/.test(v);
       },
+      message:
+        'Invalid format. The field should have two parts separated by a hyphen ("-"), where the first part has two or three numbers and the second part also consists of numbers.',
     },
   },
 });
