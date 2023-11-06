@@ -6,13 +6,14 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "build:ui" : "rm -rf dist && cd ../fullstackopen/part2/phonebook && npm run build && cp -r dist ../../../FSO3/",
+    "build:ui": "rm -rf dist && cd ../fullstackopen/part2/phonebook && npm run build && cp -r dist ../../../FSO3/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "exi",
   "license": "ISC",
   "devDependencies": {
     "@flydotio/dockerfile": "^0.4.10",
+    "eslint": "^8.53.0",
     "nodemon": "^3.0.1"
   },
   "dependencies": {
